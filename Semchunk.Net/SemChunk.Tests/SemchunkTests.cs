@@ -216,4 +216,17 @@ public class SemchunkTests
 		var wsChunks = chunker.Chunk("\n\n");
 		Assert.All(wsChunks, c => Assert.False(string.IsNullOrWhiteSpace(c)));
 	}
+
+	[Fact]
+	public void Chunker_Deterministic_For_Tiktoken_Gpt4()
+	{
+		var tokenizer = new TiktokenTokenizer(); // defaults to gpt-4
+		var chunker = ChunkerFactory.Create(tokenizer, DeterministicChunkSize);
+
+		var chunks = chunker.Chunk(DeterministicInput);
+
+		// Expected GPT-4/tiktoken behaviour from Python tests:
+		var expected = new[] { "ThisIs", "ATest." };
+		Assert.Equal(expected, chunks);
+	}
 }

@@ -42,26 +42,12 @@ jobs:
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Update versioned files
+      - name: Update files for release
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           sed -i 's/Include="Semchunk.Net" Version="[^"]*"/Include="Semchunk.Net" Version="'"$VERSION"'"/' README.md
           sed -i 's/<Version>.*<\/Version>/<Version>'"$VERSION"'<\/Version>/' Directory.Build.props
-
-      - name: Commit version bump
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet; then
-            echo "No changes to commit."
-          else
-            git add README.md Directory.Build.props
-            git commit -m "Release $VERSION"
-            git push origin HEAD:main
-          fi
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -92,3 +78,23 @@ jobs:
             exit 1
           fi
           dotnet nuget push artifacts/packages/*.nupkg --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
+
+      - name: Restore default local version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          sed -i 's/<Version>.*<\/Version>/<Version>'"$VERSION"'-local<\/Version>/' Directory.Build.props
+
+      - name: Commit version bump
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit."
+          else
+            git add README.md Directory.Build.props
+            git commit -m "Release $VERSION"
+            git push origin HEAD:main
+          fi

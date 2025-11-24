@@ -123,12 +123,11 @@ public class BenchmarkTests
 		Assert.NotEmpty(texts); // sanity
 
 		// Build a token-counter function.
-		var encoder = ModelToEncoder.For("gpt-4");
+		Encoder encoder = ModelToEncoder.For("gpt-4");
 
-		Func<string, int> tokenCounter = s => encoder.CountTokens(s);
 		const int chunkSize = 512;
 
-		var chunker = ChunkerFactory.Create(tokenCounter, chunkSize);
+		var chunker = ChunkerFactory.Create(new TiktokenTokenizer(), chunkSize);
 
 		// Act
 		var sw = System.Diagnostics.Stopwatch.StartNew();
