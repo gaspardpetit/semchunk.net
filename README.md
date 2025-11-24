@@ -24,7 +24,7 @@ Or via PackageReference:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Semchunk.Net" Version="1.0.0" />
+  <PackageReference Include="Semchunk.Net" Version="1.0.1" />
 </ItemGroup>
 ```
 
