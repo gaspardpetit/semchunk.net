@@ -10,5 +10,6 @@
 		<Description>Semantic chunking for .NET (port of semchunk).</Description>
 		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>SemchunkNet</RootNamespace>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 </Project>
