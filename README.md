@@ -1,3 +1,8 @@
+[![Build & Tests](https://github.com/gaspardpetit/semchunk.net/actions/workflows/run-tests.yml/badge.svg)](https://github.com/gaspardpetit/semchunk.net/actions/workflows/run-tests.yml)
+[![Publish NuGet Packages](https://github.com/gaspardpetit/semchunk.net/actions/workflows/publish-packages.yml/badge.svg)](https://github.com/gaspardpetit/semchunk.net/actions/workflows/publish-packages.yml)
+![NuGet Version](https://img.shields.io/nuget/v/SemchunkNet)
+
+
 # Semchunk.Net 🧩
 
 > **Semchunk.Net** is a C#/.NET port of the original **[semchunk](https://github.com/isaacus-dev/semchunk)** library by *Isaacus* (Python).  
