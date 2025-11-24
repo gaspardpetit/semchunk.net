@@ -43,13 +43,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            9.0.x
-            8.0.x
-          include-prerelease: true
+          dotnet-version: 8.0.x
 
       - name: Restore
         run: dotnet restore Semchunk.Net/Semchunk.Net.sln
+
+      - name: Build
+        run: dotnet build Semchunk.Net/Semchunk.Net.sln --configuration Release --no-restore
 
       - name: Clean package output
         run: |
@@ -58,7 +58,7 @@ jobs:
           fi
 
       - name: Pack
-        run: dotnet pack Semchunk.Net/Semchunk.Net.sln --configuration Release --no-restore -p:Version=${{ steps.version.outputs.version }} -o artifacts/packages
+        run: dotnet pack Semchunk.Net/Semchunk.Net.sln --configuration Release --no-build -p:Version=${{ steps.version.outputs.version }} -o artifacts/packages
 
       - name: Push packages to NuGet
         env:
