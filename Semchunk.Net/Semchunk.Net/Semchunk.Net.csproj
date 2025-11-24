@@ -6,9 +6,7 @@
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>SemchunkNet</PackageId>
-		<Authors>Gaspard Petit</Authors>
 		<Description>Semantic chunking for .NET (port of semchunk).</Description>
-		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>SemchunkNet</RootNamespace>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
