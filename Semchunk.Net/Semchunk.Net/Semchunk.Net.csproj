@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>SemchunkNet</PackageId>
+		<Authors>Gaspard Petit</Authors>
+		<Description>Semantic chunking for .NET (port of semchunk).</Description>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>SemchunkNet</RootNamespace>
+	</PropertyGroup>
+</Project>

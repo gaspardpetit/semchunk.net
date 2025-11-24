@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36705.20 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Semchunk.Net", "Semchunk.Net\Semchunk.Net.csproj", "{C4C27153-D3E2-4DE5-A7E8-E4D8A006E0EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Semchunk.Tests", "SemChunk.Tests\Semchunk.Tests.csproj", "{134484E4-4375-4ABA-9CF9-1482F674D4EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4C27153-D3E2-4DE5-A7E8-E4D8A006E0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C27153-D3E2-4DE5-A7E8-E4D8A006E0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C27153-D3E2-4DE5-A7E8-E4D8A006E0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C27153-D3E2-4DE5-A7E8-E4D8A006E0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{134484E4-4375-4ABA-9CF9-1482F674D4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{134484E4-4375-4ABA-9CF9-1482F674D4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{134484E4-4375-4ABA-9CF9-1482F674D4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{134484E4-4375-4ABA-9CF9-1482F674D4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {760CA384-AC29-4A3D-B29C-364099AD5D35}
+	EndGlobalSection
+EndGlobal
