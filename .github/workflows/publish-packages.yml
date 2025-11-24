@@ -17,6 +17,8 @@ env:
 jobs:
   pack-and-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -40,16 +42,37 @@ jobs:
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Update versioned files
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          sed -i 's/Include="Semchunk.Net" Version="[^"]*"/Include="Semchunk.Net" Version="'"$VERSION"'"/' README.md
+          sed -i 's/<Version>.*<\/Version>/<Version>'"$VERSION"'<\/Version>/' Directory.Build.props
+
+      - name: Commit version bump
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes to commit."
+          else
+            git add README.md Directory.Build.props
+            git commit -m "Release $VERSION"
+            git push origin HEAD:main
+          fi
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            9.0.x
-            8.0.x
-          include-prerelease: true
+          dotnet-version: 8.0.x
 
       - name: Restore
         run: dotnet restore Semchunk.Net/Semchunk.Net.sln
+
+      - name: Build
+        run: dotnet build Semchunk.Net/Semchunk.Net.sln --configuration Release --no-restore -p:Version=${{ steps.version.outputs.version }}
 
       - name: Clean package output
         run: |
@@ -58,7 +81,7 @@ jobs:
           fi
 
       - name: Pack
-        run: dotnet pack Semchunk.Net/Semchunk.Net.sln --configuration Release --no-restore -p:Version=${{ steps.version.outputs.version }} -o artifacts/packages
+        run: dotnet pack Semchunk.Net/Semchunk.Net.sln --configuration Release --no-build -p:Version=${{ steps.version.outputs.version }} -o artifacts/packages
 
       - name: Push packages to NuGet
         env:
