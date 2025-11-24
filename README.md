@@ -1,6 +1,6 @@
 # Semchunk.Net 🧩
 
-> **Semchunk.Net** is a C#/.NET port of the original **semchunk** library by *Isaacus* (Python).  
+> **Semchunk.Net** is a C#/.NET port of the original **[semchunk](https://github.com/isaacus-dev/semchunk)** library by *Isaacus* (Python).  
 > All credit for the algorithm and design goes to the original author; this project re-implements it for the .NET ecosystem.
 
 Semchunk.Net is a fast, lightweight, easy-to-use library for splitting text into **semantically meaningful chunks** in .NET.
@@ -24,7 +24,7 @@ Or via PackageReference:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Semchunk.Net" Version="0.1.0" />
+  <PackageReference Include="Semchunk.Net" Version="1.0.0" />
 </ItemGroup>
 ```
 
