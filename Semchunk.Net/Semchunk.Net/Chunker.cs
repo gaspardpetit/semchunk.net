@@ -775,20 +775,51 @@ namespace SemchunkNet
 			// Build token counter from tokenizer.Encode
 			int TokenCounter(string text) => tokenizer.Encode(text).Length;
 
-			// TODO: if your tokenizer exposes vocab or longest token, you can set maxTokenChars here.
-			return Create(TokenCounter, resolvedChunkSize, maxTokenChars, memoize, cacheMaxSize);
+			// Prefer caller-provided maxTokenChars, otherwise fall back to tokenizer metadata.
+			int? effectiveMaxTokenChars = maxTokenChars ?? tokenizer.MaxTokenChars;
+
+			return Create(TokenCounter, resolvedChunkSize, effectiveMaxTokenChars, memoize, cacheMaxSize);
 		}
 
 		private static int InferChunkSize(ITokenizer tokenizer)
 		{
+			if (tokenizer is null)
+				throw new ArgumentNullException(nameof(tokenizer));
+
 			var max = tokenizer.ModelMaxLength;
 			if (max <= 0)
+			{
 				throw new InvalidOperationException(
 					"ModelMaxLength must be a positive integer to infer chunk size.");
+			}
 
-			// Python tries to reduce by the number of special tokens for empty string.
-			// If you have that concept, subtract it here; otherwise just return ModelMaxLength.
-			return max;
+			int specials = 0;
+
+			// Prefer explicit metadata if provided.
+			if (tokenizer.FixedSpecialTokenCount is int fixedCount && fixedCount > 0)
+			{
+				specials = fixedCount;
+			}
+			else
+			{
+				// Fallback: mimic Python's "encode empty string" heuristic.
+				try
+				{
+					var emptyIds = tokenizer.Encode(string.Empty);
+					specials = emptyIds?.Length ?? 0;
+				}
+				catch
+				{
+					// If the tokenizer doesn't support empty input, just ignore and use max as-is.
+					specials = 0;
+				}
+			}
+
+			var effective = max - specials;
+
+			// Guard against weird metadata that would make the effective chunk size non-positive.
+			return effective > 0 ? effective : max;
 		}
+
 	}
 }
