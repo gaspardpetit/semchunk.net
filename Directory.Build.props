@@ -2,6 +2,7 @@
   <PropertyGroup Condition="'$(IsPackable)' != 'false'">
     <Company>Semchunk</Company>
     <Authors>Gaspard Petit</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/gaspardpetit/semchunk.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/gaspardpetit/semchunk.net</RepositoryUrl>
