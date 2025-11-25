@@ -1,4 +1,6 @@
 using SemchunkNet.Internal;
+using SemchunkNet.MicrosoftML;
+using SemchunkNet.Tiktoken;
 
 namespace SemchunkNet.Tests;
 
@@ -228,5 +230,19 @@ public class SemchunkTests
 		// Expected GPT-4/tiktoken behaviour from Python tests:
 		var expected = new[] { "ThisIs", "ATest." };
 		Assert.Equal(expected, chunks);
+	}
+
+	[Fact]
+	public void Chunker_Works_With_MicrosoftML_TiktokenTokenizer()
+	{
+		var tokenizer = MicrosoftMLTokenizer.ForTiktokenModel(
+			modelName: "gpt-4",
+			modelMaxLength: 8192);
+
+		var chunker = ChunkerFactory.Create(tokenizer, DeterministicChunkSize);
+		var chunks = chunker.Chunk(DeterministicInput);
+
+		Assert.NotEmpty(chunks);
+		Assert.All(chunks, chunk => Assert.True(tokenizer.Encode(chunk).Length <= DeterministicChunkSize));
 	}
 }

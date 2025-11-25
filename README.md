@@ -11,7 +11,7 @@
 Semchunk.Net is a fast, lightweight, easy-to-use library for splitting text into **semantically meaningful chunks** in .NET.
 
 - Works with **any** token counter (`Func<string,int>`)
-- Plays nicely with tiktoken-style libraries (e.g. `Tiktoken`, `Microsoft.ML.Tokenizers`)
+- Optional plug-and-play tokenizers via `SemchunkNet.Tiktoken` and `SemchunkNet.MicrosoftML`
 - Supports **overlapping chunks** and **character offsets** back into the original text
 - Uses the same recursive, semantics-aware algorithm as the Python version
 
@@ -21,15 +21,27 @@ The goal is a faithful port of semchunk’s behaviour, with a .NET-idiomatic API
 
 ## Installation 📦
 
+Core library:
+
 ```bash
-dotnet add package Semchunk.Net
+dotnet add package SemchunkNet
 ```
 
-Or via PackageReference:
+Optional tokenizer flavours (each includes a ready-made `ITokenizer` implementation and pulls the right tokenizer dependency):
+
+```bash
+dotnet add package SemchunkNet.Tiktoken
+dotnet add package SemchunkNet.MicrosoftML
+```
+
+PackageReference examples:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Semchunk.Net" Version="1.0.2" />
+  <PackageReference Include="SemchunkNet" Version="1.0.0" />
+  <!-- Add either or both wrappers depending on which tokenizer you want -->
+  <PackageReference Include="SemchunkNet.Tiktoken" Version="1.0.0" />
+  <PackageReference Include="SemchunkNet.MicrosoftML" Version="1.0.0" />
 </ItemGroup>
 ```
 
@@ -42,23 +54,14 @@ You bring your own tokenizer/token counter; Semchunk.Net doesn’t force a speci
 
 # Quickstart 👩‍💻
 
-Example 1 – Using a tiktoken-style tokenizer (e.g. Tiktoken)
+Example 1 – Using the packaged Tiktoken wrapper
 
 ```csharp
-using Semchunk.Net;
-using Tiktoken;
+using SemchunkNet;
+using SemchunkNet.Tiktoken;
 
-// Choose a model compatible with cl100k_base (e.g. "gpt-4").
-var encoder = ModelToEncoder.For("gpt-4");
-
-// Token counter: number of tokens in a string.
-Func<string, int> tokenCounter = text => encoder.CountTokens(text);
-
-// Choose a chunk size (in tokens).
-const int chunkSize = 512;
-
-// Construct a chunker.
-var chunker = ChunkerFactory.Create(tokenCounter, chunkSize);
+var tokenizer = new TiktokenTokenizer(modelName: "gpt-4", modelMaxLength: 8192);
+var chunker = ChunkerFactory.Create(tokenizer, chunkSize: 512);
 
 var text = "The quick brown fox jumps over the lazy dog.";
 
@@ -76,11 +79,24 @@ var chunksWithOffsets = chunker.Chunk(
 var manyChunks = chunker.ChunkMany(new[] { text });
 ```
 
-Example 2 – Simple custom token counter
+Example 2 – Using the Microsoft.ML tokenizer wrapper
+
+```csharp
+using SemchunkNet;
+using SemchunkNet.MicrosoftML;
+
+var tokenizer = MicrosoftMLTokenizer.ForTiktokenModel(modelName: "gpt-4", modelMaxLength: 8192);
+var chunker = ChunkerFactory.Create(tokenizer, chunkSize: 512);
+
+var text = "The quick brown fox jumps over the lazy dog.";
+var chunks = chunker.Chunk(text, overlap: 0.25);
+```
+
+Example 3 – Simple custom token counter
 If you don’t care about true tokens and just want a quick splitter:
 
 ```csharp
-using Semchunk.Net;
+using SemchunkNet;
 
 // Each word = 1 "token"
 Func<string, int> wordCounter = s =>

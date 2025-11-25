@@ -1,6 +1,5 @@
 ﻿using System.IO.Compression;
-using Tiktoken;
-using Xunit.Abstractions;
+using SemchunkNet.Tiktoken;
 
 namespace SemchunkNet.Tests;
 
@@ -121,9 +120,6 @@ public class BenchmarkTests
 		// Arrange
 		var texts = LoadAllTexts();
 		Assert.NotEmpty(texts); // sanity
-
-		// Build a token-counter function.
-		Encoder encoder = ModelToEncoder.For("gpt-4");
 
 		const int chunkSize = 512;
 
