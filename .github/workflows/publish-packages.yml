@@ -46,7 +46,9 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          sed -i 's/Include="Semchunk.Net" Version="[^"]*"/Include="Semchunk.Net" Version="'"$VERSION"'"/' README.md
+          for pkg in SemchunkNet SemchunkNet.Tiktoken SemchunkNet.MicrosoftML; do
+            sed -i 's/Include="'"$pkg"'" Version="[^"]*"/Include="'"$pkg"'" Version="'"$VERSION"'"/' README.md
+          done
           sed -i 's/<Version>.*<\/Version>/<Version>'"$VERSION"'<\/Version>/' Directory.Build.props
 
       - name: Setup .NET

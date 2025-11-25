@@ -1,8 +1,11 @@
 ﻿using Tiktoken;
 
-namespace SemchunkNet.Tests;
+namespace SemchunkNet.Tiktoken;
 
-public sealed class TiktokenTokenizer : ITokenizer
+/// <summary>
+/// ITokenizer implementation backed by the Tiktoken package.
+/// </summary>
+public sealed class TiktokenTokenizer : SemchunkNet.ITokenizer
 {
 	private readonly Encoder _encoder;
 

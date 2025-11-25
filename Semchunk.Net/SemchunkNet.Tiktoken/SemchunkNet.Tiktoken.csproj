@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>SemchunkNet.Tiktoken</PackageId>
+		<Description>Semchunk.Net tokenizer wrapper for the Tiktoken package.</Description>
+		<RootNamespace>SemchunkNet.Tiktoken</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Semchunk.Net\Semchunk.Net.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Tiktoken" Version="2.2.0" />
+		<PackageReference Include="Tiktoken.Encodings.cl100k" Version="2.2.0" />
+	</ItemGroup>
+</Project>
