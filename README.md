@@ -38,10 +38,10 @@ PackageReference examples:
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="SemchunkNet" Version="1.0.0" />
+  <PackageReference Include="SemchunkNet" Version="1.0.3" />
   <!-- Add either or both wrappers depending on which tokenizer you want -->
-  <PackageReference Include="SemchunkNet.Tiktoken" Version="1.0.0" />
-  <PackageReference Include="SemchunkNet.MicrosoftML" Version="1.0.0" />
+  <PackageReference Include="SemchunkNet.Tiktoken" Version="1.0.3" />
+  <PackageReference Include="SemchunkNet.MicrosoftML" Version="1.0.3" />
 </ItemGroup>
 ```
 
